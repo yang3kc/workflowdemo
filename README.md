@@ -12,3 +12,9 @@ cluster: "sbatch --nodes=1 --mem={resources.mem} --time={resources.time}"
 use-conda: true
 default-resources: [time="00:10:00", mem="15G"]
 ```
+
+You can submit jobs to Slurm with snakemake using the following command
+
+```sh
+snakemake {command} --profile {profile_name}
+```
