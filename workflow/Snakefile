@@ -1,0 +1,28 @@
+import os
+
+ROOT = '../data'
+
+RAW_TWEET = os.path.join(ROOT, "raw_data", "tweets_part_{partition}.json.gz")
+INTERMEDIATE_DATA = os.path.join(ROOT, "intermediate_data", "part_{partition}.csv")
+AGG_TABLE = os.path.join(ROOT, "agg_table.csv")
+FIGURE = os.path.join(ROOT, 'figure.png')
+
+PARTITIONS = list(range(10))
+
+# Analyze the results
+rule analyze_key_word_count:
+    input: AGG_TABLE
+    output: FIGURE
+    shell: "python analyze_key_word_count.py {input} {output}"
+
+# Combine the results together
+rule aggregate_key_word_count:
+    input: expand(INTERMEDIATE_DATA, partition=PARTITIONS)
+    output: AGG_TABLE
+    shell: "python combine_dfs.py {input} {output}"
+
+# Flag the tweets with the key word "dog" or "cat"
+rule extract_key_word_count:
+    input: RAW_TWEET
+    output: INTERMEDIATE_DATA
+    shell: "python extract_key_word_count.py {input} {output}"
