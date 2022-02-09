@@ -2,6 +2,12 @@
 
 This repo contains some code and data to demonstrate how to work with [snakemake](https://snakemake.readthedocs.io/en/stable/).
 
+# SSH tunneling
+
+```sh
+ssh -L 8215:localhost:8890 yourname@your.target.server
+```
+
 # Submit jobs to Slurm
 
 Put the following content to `~/.config/snakemake/{profile_name}/config.yaml`
